@@ -15,7 +15,11 @@
 export default {
     methods: {
         onsubmit() {
-            console.log('Label vlalue:', this.label);
+            if (this.label === "") {
+                return;
+            }
+            //console.log('Label vlalue:', this.label);
+            this.$emit('todo-added', this.label)
         }
     },
     data() {
