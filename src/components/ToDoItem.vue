@@ -1,20 +1,36 @@
 <template> 
- <div class="custom-checkbox">
-  <input type="checkbox" id="todo-item" :checked="isDone" class="checkbox" />
-  <label for="todo-item">{{ label }}</label>
+ <div class="stack-small">
+    <div class="custom-checkbox">
+    <input 
+    type="checkbox" 
+    :id="id" 
+    :checked="isDone" 
+    @change="$emit('checkbox-changed')"
+    class="checkbox" />
+    <label :for="id" class="checkbox-label">{{ label }}</label>
+    </div>
+    <div class="btn-group">
+        <button type="button" class="btn" @click="ToggleToItemEditForm">
+            Edit <sapn class="visually-hidden">{{ label }}</sapn>
+        </button>
+        <button type="button" class="btn btn__danger" @click="deleteToDo">Delete<span calss="visually-hidden">{{ label }}</span></button>
+    </div>
   </div>
 </template>
 
 <script>
+import { nanoid } from 'nanoid';
+
 export default {
     props: {
         label: { required: true, type: String },
         done: { default: false, type: Boolean },
-         id: { required: true, type: String },
     },
     data() {
         return {
             isDone: this.done,
+            id: "todo-" + nanoid(),
+            isEditing: false
         };
     }
 }
